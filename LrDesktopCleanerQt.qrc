@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/LrDesktopCleanerQt">
+        <file>LrDesktopCleanerQt.ico</file>
+    </qresource>
+</RCC>
