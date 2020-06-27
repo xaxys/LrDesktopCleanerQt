@@ -16,9 +16,9 @@ private:
 	QString watchPath;
 	
 signals:
-	void fileAdded(QString);
-	void fileRemoved(QString);
-	void fileModified(QString);
-	void fileRenamed(QString oldName, QString newName);
+	void fileAdded(const QString&);
+	void fileRemoved(const QString&);
+	void fileModified(const QString&);
+	void fileRenamed(const QString& oldName, const QString& newName);
 };
 

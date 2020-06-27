@@ -35,7 +35,7 @@ signals:
 	void cleanAllFile();
 
 public slots:
-	void receiveFileCleaned(bool, QString);
+	void receiveFileCleaned(bool, const QString&);
 	void receiveCleanAllFileInstruction();
 
 };

@@ -86,9 +86,8 @@ void LrDesktopCleanerQt::setInterval(int i)
  * \param succeeded
  * \param fileName
  */
-void LrDesktopCleanerQt::receiveFileCleaned(bool succeeded, QString fileName)
+void LrDesktopCleanerQt::receiveFileCleaned(bool succeeded, const QString& fileName)
 {
-    fileName = fileName.split("/").back();
-    QString tips = (succeeded ? QStringLiteral("É¾³ý³É¹¦£º") : QStringLiteral("É¾³ýÊ§°Ü£º")) + fileName;
+    QString tips = (succeeded ? QStringLiteral("É¾³ý³É¹¦£º") : QStringLiteral("É¾³ýÊ§°Ü£º")) + fileName.split("/").back();
     systemTrayIcon->showMessage(nullptr, tips, QSystemTrayIcon::NoIcon, 5);
 }

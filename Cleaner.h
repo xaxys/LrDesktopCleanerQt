@@ -20,26 +20,25 @@ class Cleaner : public QThread
 public:
 	Cleaner(int);
 	~Cleaner();
-	void add(QString);
-	void remove(QString);
-	void rename(QString, QString);
-	void modify(QString);
+	void add(const QString&);
+	void remove(const QString&);
+	void rename(const QString&, const QString&);
+	void modify(const QString&);
 	void run();
 	void clean();
 	void setInterval(const long);
-	void setInitialHeap(Heap<FileEntry>);
-
+	void setInitialHeap(const Heap<FileEntry>);
 
 signals:
-	void fileCleaned(bool, QString);
+	void fileCleaned(bool, const QString&);
 	void heapModified(const Heap<FileEntry>);
 
 public slots:
 	void receiveCleanAllFile();
-	void receiveFileAdded(QString);
-	void receiveFileRemoved(QString);
-	void receiveFileModified(QString);
-	void receiveFileRenamed(QString oldName, QString newName);
+	void receiveFileAdded(const QString&);
+	void receiveFileRemoved(const QString&);
+	void receiveFileModified(const QString&);
+	void receiveFileRenamed(const QString& oldName, const QString& newName);
 
 };
 

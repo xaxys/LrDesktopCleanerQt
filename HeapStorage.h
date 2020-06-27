@@ -12,7 +12,7 @@ private:
 
 public:
 	HeapStorage(QString);
-	Heap<FileEntry> fromStorage();
+	const Heap<FileEntry> fromStorage();
 
 public slots:
 	void receiveHeapModified(const Heap<FileEntry>);

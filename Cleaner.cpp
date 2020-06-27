@@ -11,7 +11,7 @@ Cleaner::~Cleaner()
 }
 
 
-void Cleaner::add(QString s)
+void Cleaner::add(const QString& s)
 {
 	_mutex.lock();
 	cleanList.push(FileEntry(QDateTime::currentDateTime(), s));
@@ -19,7 +19,7 @@ void Cleaner::add(QString s)
 	_mutex.unlock();
 }
 
-void Cleaner::remove(QString s)
+void Cleaner::remove(const QString& s)
 {
 	_mutex.lock();
 	cleanList.remove(FileEntry(QDateTime::currentDateTime(), s));
@@ -27,7 +27,7 @@ void Cleaner::remove(QString s)
 	_mutex.unlock();
 }
 
-void Cleaner::rename(QString s, QString re)
+void Cleaner::rename(const QString& s, const QString& re)
 {
 	_mutex.lock();
 	QDateTime dt = QDateTime::currentDateTime();
@@ -37,7 +37,7 @@ void Cleaner::rename(QString s, QString re)
 	_mutex.unlock();
 }
 
-void Cleaner::modify(QString s)
+void Cleaner::modify(const QString& s)
 {
 	_mutex.lock();
 	cleanList.push(FileEntry(QDateTime::currentDateTime(), s));
@@ -62,9 +62,12 @@ void Cleaner::run()
 {
 	while (true)
 	{
-		if (!cleanList.empty()) {
+		_mutex.lock();
+		bool empty = cleanList.empty();
+		_mutex.unlock();
+		if (!empty) {
 			_mutex.lock();
-			FileEntry entry = cleanList.top();
+			FileEntry& entry = cleanList.top();
 			_mutex.unlock();
 			if (entry.time.toMSecsSinceEpoch() != 0
 				&& entry.time.addSecs(interval) <= QDateTime::currentDateTime())
@@ -81,7 +84,7 @@ void Cleaner::setInterval(const long l)
 	interval = l;
 }
 
-void Cleaner::setInitialHeap(Heap<FileEntry> heap)
+void Cleaner::setInitialHeap(const Heap<FileEntry> heap)
 {
 	cleanList = heap;
 }
@@ -99,22 +102,22 @@ void Cleaner::receiveCleanAllFile()
 }
 
 
-void Cleaner::receiveFileAdded(QString s)
+void Cleaner::receiveFileAdded(const QString& s)
 {
 	add(s);
 }
 
-void Cleaner::receiveFileRemoved(QString s)
+void Cleaner::receiveFileRemoved(const QString& s)
 {
 	remove(s);
 }
 
-void Cleaner::receiveFileModified(QString s)
+void Cleaner::receiveFileModified(const QString& s)
 {
 	modify(s);
 }
 
-void Cleaner::receiveFileRenamed(QString oldName, QString newName)
+void Cleaner::receiveFileRenamed(const QString& oldName, const QString& newName)
 {
 	rename(oldName, newName);
 }

@@ -6,7 +6,7 @@ HeapStorage::HeapStorage(QString path) : storagePath(path)
 {
 }
 
-Heap<FileEntry> HeapStorage::fromStorage()
+const Heap<FileEntry> HeapStorage::fromStorage()
 {
 	QFile storageFile(storagePath);
 	if (!storageFile.open(QIODevice::ReadOnly)) return Heap<FileEntry>();
